@@ -16,12 +16,10 @@ struct Example : csnd::Plugin<1,1>
     {
         csnd::AudioSig input (this, inargs(0));
         csnd::AudioSig output(this, outargs(0));
-
         for (int i=offset; i < nsmps; i++) 
         {
             output[i] = input[i];
         }
-
         return OK;
     }   
 };

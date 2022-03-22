@@ -1,0 +1,3 @@
+[submodule "Part3/csound_opcodes"]
+	path = Part3/csound_opcodes
+	url = https://github.com/Leofltt/csound_opcodes

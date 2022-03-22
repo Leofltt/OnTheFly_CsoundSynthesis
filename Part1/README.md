@@ -1,6 +1,7 @@
 ## Files
  * [1.0.csd](./1.0.csd) : demonstrating the basics of csound syntax
  * [1.1.csd](./1.1.csd) : introducing the function syntax
+ * [1.2.csd](./1.2.csd) : intro to Scanned Synthesis 
 
 ## Resources
  * [Command line flags](https://www.csounds.com/manual/html/CommandFlags.html)

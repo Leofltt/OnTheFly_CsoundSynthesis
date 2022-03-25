@@ -13,4 +13,5 @@ A few examples showcasing the basics of Csound and it's syntax, starting from th
  * [Score Statements](https://csound.com/docs/manual/ScoreStatements.html)
  * [Function Syntax](https://csound.com/docs/manual/functional.html)
  * [Live Score Recompilation in CsoundQt](https://csoundjournal.com/issue22/LiveCodingWithCsound.html) and more live-coding starter tricks
+ * [Csound Live Code](https://live.csound.com/) : a web based interface for live coding with Csound featuring a number of ready made examples and instruments
  

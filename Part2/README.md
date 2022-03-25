@@ -4,7 +4,7 @@ Write your own Csound opcodes and extend the language using native Csound syntax
 ## Files 
 * [2.0.csd](./2.0.csd) : demonstrating the basics of how to write User Defined Opcodes
 * [2.1.csd](./2.1.csd) : fm synthesis example
-* [2.2.csd](./2.2.csd) : physical modeling example
+* [2.2.csd](./2.2.csd) : physical modeling example, clarinet waveguide based on a model developed by Perry Cook
 
 ## Resources
 * [opcode](https://csounds.com/manual/html/opcode.html) : Csound manual page regarding UDO

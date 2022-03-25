@@ -3,6 +3,10 @@ Materials for the workshop "Csound: Sound Synthesis and Language Extensions" pre
 
 **Requirements:** [Csound](https://csound.com/download.html), [CsoundQT](https://github.com/CsoundQt/CsoundQt/releases) (please grab a stable or rc build), a C++ IDE and compiler, [CMake](https://cmake.org/)
 
+To clone this repository run this command
+
+`git clone --recurse-submodules https://github.com/Leofltt/OnTheFly_CsoundSynthesis.git`
+
 ## TOC
 
 ### Part 1
@@ -32,8 +36,3 @@ Materials for the workshop "Csound: Sound Synthesis and Language Extensions" pre
 * [Live Coding with Csound](https://csoundjournal.com/issue22/LiveCodingWithCsound.html), H. Sigurdsson
 * [Supporting an Object-Oriented Approach to Unit Generator Development: The Csound Plugin Opcode Framework](https://www.mdpi.com/2076-3417/7/10/970/htm), V. Lazzarini, 2017
 
-
-### Code
-
-* [Csound](https://github.com/csound/csound) main repo
-* [Csound Plugins](https://github.com/csound/plugins) repository

@@ -11,19 +11,25 @@ nchnls = 2
 
 isize = 16384
 
+opcode declick,a,a
+ain xin
+aout = ain * expseg(0.001, 0.05,1,p3-0.1,1,0.1,0.005)
+xout aout
+endop
+
+
 ifn ftgen 1,0,isize,-7,0.8,0.55*isize,-1,0.45*isize,-1
 
-/*********************************
-idel LPdel ifo,ifc
-idel - lowpass delay (samples)
-ifo - fund freq
-ifc - cutoff freq
-**********************************/
 opcode LPdel,i,ii
- ifo,ifc xin
+;output:
+;idel - lowpass delay (samples)
+;inputs:
+;ifund - fund freq
+;icf - cutoff freq
+ ifund,icf xin
  ipi = $M_PI
- itheta = 2*ipi*ifc/sr
- iomega = 2*ipi*ifo/sr
+ itheta = 2*ipi*icf/sr
+ iomega = 2*ipi*ifund/sr
  ib = sqrt((2 - cos(itheta))^2 -1) - 2 + cos(itheta)
  iden = (1 + 2*ib*cos(iomega) + ib*ib)
  ire = (1. + ib + cos(iomega)*(ib+ib*ib))/iden
@@ -31,15 +37,11 @@ opcode LPdel,i,ii
  xout -taninv2(img,ire)/iomega
 endop
 
-
-/*********************************
-asig Reed ain,kpr,kem,ifn
-ain - input (feedback) signal
-kpr - pressure amount
-kem - embouch pos (0-1)
-ifn - reed transfer fn
-**********************************/
 opcode Reed,a,akki
+;ain - input (feedback) signal
+;kpr - pressure amount
+;kem - embouch pos (0-1)
+;ifn - reed transfer fn
  ain,kpr,kem,ifn xin
  apr linsegr 0,.005,1,p3,1,.01,0
  asig = ain-apr*kpr-kem
@@ -48,12 +50,10 @@ opcode Reed,a,akki
  xout asig
 endop
 
-/**********************
-asig Ap ain,ic
-ain - input signal
-ic - all-pass coefficient
-********************/
+
 opcode Ap,a,ai
+;ain - input signal
+;ic - all-pass coefficient
  setksmps 1
  asig,ic xin
  aap init 0
@@ -61,63 +61,57 @@ opcode Ap,a,ai
  xout aap
 endop
 
-/******************************
-asig Clarinet kamp,ifun,ipr,iem,ifc
-kamp - amplitude
-ifun - fundamental
-ipr - air pressure
-iem - embouch pos
-ifc - lowpass filter factor
-*******************************/
 opcode Clarinet,a,kiiii
- kamp,ifun,ipr,ioff,ifc xin
+ kamp,ifund,iap,iem,ifilt xin
+;kamp - amplitude
+;ifund - fundamental
+;iap - air pressure
+;iem - embouch pos
+;ifilt - lowpass filter factor
+ setksmps 1
  awg2 init 0
  aap init 0
- ifun *= 2
- ifc = ifun*ifc
- ilpd = LPdel(ifun,ifc)
- ides = sr/ifun
+ ifund *= 2
+ ifilt = ifund*ifilt
+ ilpd = LPdel(ifund,ifilt)
+ ides = sr/ifund
  idtt = int(ides - ilpd)
  ifrc = ides - (idtt + ilpd)
  ic = (1-ifrc)/(1+ifrc)
  awg1 delayr idtt/sr
- afdb = Ap(tone(awg1,ifc), ic)
-      delayw Reed(-afdb,ipr,ioff,1)
+ afdb = Ap(tone(awg1,ifilt), ic)
+      delayw Reed(-afdb,iap,iem,1)
  xout dcblock2(awg1*kamp)
 endop
 
 instr 1
- asig Pipe p4,p5,p6,p7,p8
-     outs asig,asig
+iAmp = 0.5
+iPitch = p4
+iAp = 0.7
+iEm = 0.8
+iF = 2.5
+ asig Clarinet iAmp,iPitch,iAp,iEm,iF
+ asig = declick(asig)
+ outs asig,asig
 endin
+
+instr 2
+
+iNoteLength = p4
+kRand = randomh(1, 7, 1/iNoteLength)
+kPitch = cpsmidinn(40+kRand)
+
+kmetro metro 1/iNoteLength
+
+schedkwhen(kmetro, 0, -1, 1, 0, iNoteLength, kPitch)
+endin
+
+schedule(2,0,-1,1)
+
 
 </CsInstruments>
 <CsScore>
 
-i1 0 1 0.5 440 0.7 0.7 6
-i1 + 1 0.5 880 0.9 0.7 5
-i1 + 1 0.5 660 0.7 0.7 4.5
-i1 + 1 0.5 550 0.8 0.6 3
-i1 + 1 0.5 440 0.7 0.6 3.5
 
 </CsScore>
 </CsoundSynthesizer>
-
-
-<bsbPanel>
- <label>Widgets</label>
- <objectName/>
- <x>100</x>
- <y>100</y>
- <width>320</width>
- <height>240</height>
- <visible>true</visible>
- <uuid/>
- <bgcolor mode="background">
-  <r>240</r>
-  <g>240</g>
-  <b>240</b>
- </bgcolor>
-</bsbPanel>
-<bsbPresets>
-</bsbPresets>

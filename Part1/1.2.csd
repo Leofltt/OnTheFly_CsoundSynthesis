@@ -11,10 +11,8 @@ nchnls = 2
 
 instr 1
 
-iHam = ftgen(8,0,128,10,1)
-
 initf = ftgen(1,0,128,7,0,64,1,64,0)
-ivel = ftgen(2, 0, 128, 7, 0, 64, 1,64, 1)   
+ivel = ftgen(2, 0, 128, 7, 0, 64, 1,64, 0)   
 imass = ftgen(3, 0, 128, -7, 1, 128, 1)
 istif = ftgen(4, 0, 16384, -23, "files/string-128.matrix")
 icentr = ftgen(5, 0, 128,-7 ,0.5 ,128, 0)
@@ -22,23 +20,22 @@ idamp = ftgen(6, 0, 128, 7, 1, 128, 1)
 itraj = ftgen(7, 0, 128, -7, .001, 128,128)
 ;itraj2 = ftgen(7, 0, 128, -7, .001, 64, 10, 50, 100, 18, 14)
 
-kpitch = p4 + 0.03 * p4 * lfo(1,5)
-kenvm = adsr(0.001, 0.8, 0.2, 1)
-kAmp = adsr(0.1, 0.6, 0.6, 1)
-kenv3 = adsr(0.8, 0.6, 0.8, 1)
-
-kstif = 0.7 + 0.1 * kenv3
-kmass =100-(5*kenvm)       
+kpitch = p4 ;+ 0.03 * p4 * lfo(1,5)
+kenvm = adsr(0.04, 0.8, 0.2, 1)
+kAmp = adsr(0.1, 0.6, 0.6, 0)
+kenv = adsr(0.8, 0.6, 0.8, 1)
+kstif = 0.2 + 0.1 * kenv 
+kmass =10-(5*kenvm)       
 kcentr = 0.1
 kdamp = -0.02
-ileft = 0.01
-iright = 0.9
-kpos = 0.1
+ileft = 0.2
+iright = 0.8
+kpos = 0.3
 kstrength = 0.005
 id = 1
 
 a2 init 0
-scanu 2,      ;ftable with initial position of masses, if negative indicates an hammer shape
+scanu initf,      ;ftable with initial position of masses, if negative indicates an hammer shape
       0.1,         ;update period (how often model updates state)
       ivel,     ;ftable of initial velocity
       imass,    ;ftable with masses of the objects
@@ -55,8 +52,10 @@ scanu 2,      ;ftable with initial position of masses, if negative indicates an 
       a2,          ;audio input (model excitation) you can try exciting with a sample for unique outcomes
       0,           ;if 1, display masses' evolution
       id           ;id for the scans opcode. If negative, will be a ftable where the waveshape will be written to (for table reading opcodes)
-a1 scans .05*kAmp,kpitch,itraj,id
+a1 = scans(.05*kAmp,kpitch,itraj,id)
 a1 dcblock a1
+a1 = butterlp(a1, kpitch*8)
+a1 nreverb a1, 1, .2
 outs a1, a1
 endin
 
@@ -64,17 +63,19 @@ endin
 instr 2
 
 iNoteLength = p4
-kPitch = cpsmidinn(60)
+krand = randomh(0,12,1/iNoteLength)
+kPitch = cpsmidinn(38+krand)
 
 kmetro metro 1/iNoteLength
 
 schedkwhen(kmetro, 0, -1, 1, 0, iNoteLength, kPitch)
 endin
 
-schedule(2,0,-1,5)
+schedule(2,0,-1,8)
 
 </CsInstruments>
 <CsScore>
 
 </CsScore>
 </CsoundSynthesizer>
+

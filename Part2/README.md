@@ -1,6 +1,9 @@
+# User Defined Opcodes
+Write your own Csound opcodes and extend the language using native Csound syntax
+
 ## Files 
 * [2.0.csd](./2.0.csd) : demonstrating the basics of how to write User Defined Opcodes
-* [2.1.csd](./2.1.csd) : fm example
+* [2.1.csd](./2.1.csd) : additive synthesis example
 * [2.2.csd](./2.2.csd) : physical modeling example
 
 ## Resources

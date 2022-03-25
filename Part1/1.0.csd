@@ -55,33 +55,3 @@ i. + . 3
 
 </CsScore>
 </CsoundSynthesizer>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<bsbPanel>
- <label>Widgets</label>
- <objectName/>
- <x>408</x>
- <y>139</y>
- <width>677</width>
- <height>513</height>
- <visible>true</visible>
- <uuid/>
- <bgcolor mode="background">
-  <r>240</r>
-  <g>240</g>
-  <b>240</b>
- </bgcolor>
-</bsbPanel>
-<bsbPresets>
-</bsbPresets>

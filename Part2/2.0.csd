@@ -23,7 +23,6 @@ aEnv = linseg:a(0, (p3 -0.02)*iAD+0.01, 1, (p3 -0.02)*(1-iAD)+0.01, 0)
 endif
 
 xout aEnv
-
 endop
 
 gisine   ftgen 1, 0, 4096, 10, 1                           ; Sine wave
@@ -36,32 +35,21 @@ aosc = oscili(1, 440,gisine)
 aosc *= ADEnv(0.1,1)
 
 outs aosc, aosc
-
 endin
 
-schedule(1,0,1)
+instr 2
+
+iNoteLength = p4
+
+kmetro metro 1/iNoteLength
+
+schedkwhen(kmetro, 0, -1, 1, 0, iNoteLength)
+endin
+
+schedule(2,0,100,2)
 
 </CsInstruments>
 <CsScore>
 
 </CsScore>
 </CsoundSynthesizer>
-
-
-<bsbPanel>
- <label>Widgets</label>
- <objectName/>
- <x>100</x>
- <y>100</y>
- <width>320</width>
- <height>240</height>
- <visible>true</visible>
- <uuid/>
- <bgcolor mode="background">
-  <r>240</r>
-  <g>240</g>
-  <b>240</b>
- </bgcolor>
-</bsbPanel>
-<bsbPresets>
-</bsbPresets>

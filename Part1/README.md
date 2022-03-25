@@ -1,3 +1,6 @@
+# Csound basics 
+A few examples showcasing the basics of Csound and it's syntax, starting from the classic way to more modern approaches
+
 ## Files
  * [1.0.csd](./1.0.csd) : demonstrating the basics of csound syntax
  * [1.1.csd](./1.1.csd) : introducing the function syntax

@@ -2,6 +2,7 @@
 <CsOptions>
 
 -odac  
+-d
 
 </CsOptions>
 
@@ -18,7 +19,7 @@ gisaw = ftgen(3, 0, 4096, 7, 0, 2048, 1, 0, -1, 2048, 0)      ; Saw wave
 
 instr 1
 
-itable = p4
+itable = 1
 iadFactor = 0.01
 iatkDur = p3 * iadFactor
 idecDur = p3 * (1 - iadFactor)
@@ -30,32 +31,21 @@ outs aosc, aosc
 
 endin
 
+instr 2
+
+iNoteLength = p4
+
+kmetro metro 1/iNoteLength
+
+schedkwhen(kmetro, 0, -1, 1, 0, iNoteLength)
+endin
+
+schedule(2,0,100,2)
+
 </CsInstruments>
 
 <CsScore>
-r 30      
-i1 0 2 1  
-i. + . 2
-i. + . 3
+
 
 </CsScore>
 </CsoundSynthesizer>
-
-
-<bsbPanel>
- <label>Widgets</label>
- <objectName/>
- <x>100</x>
- <y>100</y>
- <width>320</width>
- <height>240</height>
- <visible>true</visible>
- <uuid/>
- <bgcolor mode="background">
-  <r>240</r>
-  <g>240</g>
-  <b>240</b>
- </bgcolor>
-</bsbPanel>
-<bsbPresets>
-</bsbPresets>

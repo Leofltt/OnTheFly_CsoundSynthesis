@@ -1,7 +1,9 @@
 #include <plugin.h>
 
-struct Example : csnd::Plugin<1,1> 
+struct Example : csnd::Plugin<1,2> 
 {
+    MYFLT amp;
+
     int init() 
     {
         return OK;
@@ -14,11 +16,12 @@ struct Example : csnd::Plugin<1,1>
 
     int aperf()
     {
-        csnd::AudioSig input (this, inargs(0));
+        amp = inargs[1];
+        csnd::AudioSig input(this, inargs(0));
         csnd::AudioSig output(this, outargs(0));
         for (int i=offset; i < nsmps; i++) 
         {
-            output[i] = input[i];
+            output[i] = input[i]*amp;
         }
         return OK;
     }   
@@ -28,6 +31,6 @@ struct Example : csnd::Plugin<1,1>
 
 void csnd::on_load(Csound *csound)
 {
-    csnd::plugin<Example>(csound, "example", "a", "a", csnd::thread::a); 
+    csnd::plugin<Example>(csound, "example", "a", "ax", csnd::thread::a); 
 
 }

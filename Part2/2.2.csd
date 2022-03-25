@@ -62,14 +62,14 @@ opcode Ap,a,ai
 endop
 
 /******************************
-asig Pipe kamp,ifun,ipr,iem,ifc
+asig Clarinet kamp,ifun,ipr,iem,ifc
 kamp - amplitude
 ifun - fundamental
 ipr - air pressure
 iem - embouch pos
 ifc - lowpass filter factor
 *******************************/
-opcode Pipe,a,kiiii
+opcode Clarinet,a,kiiii
  kamp,ifun,ipr,ioff,ifc xin
  awg2 init 0
  aap init 0
@@ -88,7 +88,7 @@ endop
 
 instr 1
  asig Pipe p4,p5,p6,p7,p8
-     out asig
+     outs asig,asig
 endin
 
 </CsInstruments>
@@ -102,6 +102,8 @@ i1 + 1 0.5 440 0.7 0.6 3.5
 
 </CsScore>
 </CsoundSynthesizer>
+
+
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>
